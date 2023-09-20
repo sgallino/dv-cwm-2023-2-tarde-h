@@ -10,7 +10,12 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    // A través de extend podemos agregar nuevos valores para diferentes estilos de Tailwind.
+    extend: {
+      gridTemplateRows: {
+        'layout': '60px 1fr 100px',
+      },
+    },
   },
   plugins: [],
 }

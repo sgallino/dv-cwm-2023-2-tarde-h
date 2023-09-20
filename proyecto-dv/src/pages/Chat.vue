@@ -1,10 +1,11 @@
 <script>
 import { chatSaveMessage, chatSubscribeToMessages } from './../services/chat.js';
-
-// TODO: Ordenar los mensajes por fecha :D
+import BaseButton from '../components/BaseButton.vue';
+import BaseLabel from '../components/BaseLabel.vue';
 
 export default {
     name: 'Chat',
+    components: { BaseButton, BaseLabel },
     data() {
         return {
             messages: [],
@@ -47,6 +48,7 @@ export default {
             >
                 <div><b>Usuario:</b> {{ message.user }}</div>
                 <div><b>Mensaje:</b> {{ message.message }}</div>
+                <div class="text-right">{{ message.created_at }}</div>
             </div>
         </div>
 
@@ -56,10 +58,9 @@ export default {
             @submit.prevent="sendMessage"
         >
             <div class="mb-3">
-                <label 
+                <BaseLabel 
                     for="user"
-                    class="block mb-1"
-                >Usuario</label>
+                >Usuario</BaseLabel>
                 <input
                     class="w-full py-1.5 px-2 border border-gray-400 rounded"
                     type="text"
@@ -68,20 +69,18 @@ export default {
                 >
             </div>
             <div class="mb-3">
-                <label 
-                    for="message"
-                    class="block mb-1"
-                >Mensaje</label>
+                <BaseLabel for="message">Mensaje</BaseLabel>
                 <textarea 
                     class="w-full py-1.5 px-2 border border-gray-400 rounded"
                     id="message"
                     v-model="newMessage.message"
                 ></textarea>
             </div>
-            <button
+            <BaseButton />
+            <!-- <button
                 type="submit"
                 class="w-full p-2 rounded bg-blue-600 text-white"
-            >Enviar</button>
+            >Enviar</button> -->
         </form>
     </div>
 </template>

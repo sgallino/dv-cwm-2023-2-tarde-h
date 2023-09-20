@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .grilla-principal {
+    grid-template-rows: 60px 1fr 100px;
+} */

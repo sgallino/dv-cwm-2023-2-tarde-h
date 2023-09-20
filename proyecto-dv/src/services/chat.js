@@ -1,6 +1,6 @@
 // Este servicio va a ofrecer las funciones para manejar la data del chat.
 import { db } from "./firebase";
-import { addDoc, collection, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, orderBy, onSnapshot, query, serverTimestamp } from "firebase/firestore";
 
 const refChat = collection(db, 'chat');
 
@@ -13,7 +13,11 @@ export function chatSaveMessage(data) {
     Retorna una promesa que se resuelve cuando la grabación se
     completó.
     */
-    return addDoc(refChat, data);
+    // Agregamos en los datos que se guarde la fecha y hora del servidor, usando la función serverTimestamp de Firestore.
+    return addDoc(refChat, {
+        ...data, 
+        created_at: serverTimestamp(),
+    });
 }
 
 export function chatSubscribeToMessages(callback) {
@@ -34,12 +38,24 @@ export function chatSubscribeToMessages(callback) {
     
     // Vamos a escuchar los mensajes para transformarlos en un array de objetos que contengan solamente la data del mensaje de chat.
     // Una vez creado ese array, se lo vamos a pasar a la función del callback que recibimos como argumento.
-    onSnapshot(refChat, snapshot => {
+
+    /*
+    Vamos a traer los mensajes ordenados por la fecha de creación que tenemos en el campo "created_at".
+    Cuando queremos aplicar algún tipo de filtro al a consulta, ya sea condicionar qué resultados traemos, su orden o limitar cuántos traer, tenemos que armar un "query" con la función "query()".
+    Esta función recibe al menos 2 parámetros:
+    1. La referencia a alguna collection. Que es en la que queremos consultar.
+    2. Una (o más) de las funciones que configuran la consulta. Por ejemplo, orderBy(), where() o limit().
+
+    Esa consulta la vamos a poder usar en cualquiera de las funciones que esperan recibir una referencia de una collection para traer datos, como onSnapshot.
+    */
+   const q = query(refChat, orderBy('created_at'));
+    onSnapshot(q, snapshot => {
         // console.log(snapshot.docs);
         const messages = snapshot.docs.map(doc => {
             return {
                 user: doc.data().user,
                 message: doc.data().message,
+                created_at: doc.data().created_at.toDate(),
             }
         });
         // console.log("Mensajes transformados: ", messages);
