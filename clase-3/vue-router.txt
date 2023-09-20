@@ -1,0 +1,27 @@
+# Vue Router
+Es el servicio oficial de routeo de Vue.
+
+https://router.vuejs.org/installation.html
+Lo instalamos en nuestro proyecto con el comando:
+
+    npm install vue-router@4
+
+Luego, funciona creando una lista de las rutas que queremos tener.
+La idea es asociar una ruta del proyecto a un componente.
+En nuestro caso, los componentes para las rutas son los que guardamos en la
+carpeta [src/pages].
+
+Las rutas las definimos en un archivo de routeo que vamos a crear llamado
+[src/router/router.js].
+
+
+Una vez creado el router, lo que sigue es registrar el mismo con la app de
+Vue en el [main.js].
+
+
+Finalmente, agregamos lo que falta en el HTML de los componentes.
+
+Vue Router incluye dos componentes que tenemos que usar:
+
+- <router-link> que nos permite crear links de navegación.
+- <router-view> que nos permite definir un espacio donde se carguen las vistas.

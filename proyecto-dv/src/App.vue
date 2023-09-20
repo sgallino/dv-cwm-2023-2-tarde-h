@@ -1,68 +1,29 @@
 <script>
-import { chatSaveMessage, chatSubscribeToMessages } from './services/chat.js';
-
 export default {
     name: 'App',
-    data() {
-        return {
-            messages: [],
-            newMessage: {
-                user: '',
-                message: '',
-            }
-        }
-    },
-
-    methods: {
-        sendMessage() {
-            chatSaveMessage({
-                user: this.newMessage.user,
-                message: this.newMessage.message,
-            })
-                .then(() => {
-                    this.newMessage.message = '';
-                });
-        }
-    },
-
-    // Cargamos los mensajes iniciales.
-    mounted() {
-        chatSubscribeToMessages(messages => {
-            this.messages = messages;
-        });
-    }
 }
 </script>
 
 <template>
-    <h1>Intro a Firestore, ahora leyendo en tiempo real</h1>
+    <header class="flex gap-8 items-center p-4 bg-slate-100">
+        <p class="text-xl">DV Chat</p>
 
-    <form 
-        action="#" 
-        @submit.prevent="sendMessage"
-    >
-        <div>
-            <label for="user">Usuario</label>
-            <input
-                type="text"
-                id="user"
-                v-model="newMessage.user"
-            >
-        </div>
-        <div>
-            <label for="message">Mensaje</label>
-            <textarea 
-                id="message"
-                v-model="newMessage.message"
-            ></textarea>
-        </div>
-        <button type="submit">Enviar</button>
-    </form>
-
-    <div>
-        <div v-for="message in messages">
-            <div><b>Usuario:</b> {{ message.user }}</div>
-            <div><b>Mensaje:</b> {{ message.message }}</div>
-        </div>
+        <nav>
+            <ul class="flex gap-4">
+                <li>
+                    <router-link to="/">Home</router-link>
+                </li>
+                <li>
+                    <router-link to="/quienes-somos">Quiénes Somos</router-link>
+                </li>
+                <li>
+                    <router-link to="/chat">Chat</router-link>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container p-4 m-auto">
+        <!-- router-view es donde se van a cargar los componentes que corresponden a la ruta indicada en el router. -->
+        <router-view></router-view>
     </div>
 </template>

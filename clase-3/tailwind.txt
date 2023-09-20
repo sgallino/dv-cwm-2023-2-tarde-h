@@ -1,0 +1,81 @@
+# Tailwind
+https://tailwindcss.com/
+
+Tailwind es un framework de CSS de "utilidades", que mapea cada estilo
+a una clase específica. Mejor dicho, cada combinación de estilo y valor
+a una clase.
+
+Por ejemplo, si yo quiero poner un padding de 1rem a un elemento,
+puedo usar la clase "p-4". Si quisiera un padding de 2rem, la clase sería
+"p-8".
+Vemos que "p-" representa "padding", y el "4" y el "8" son diferentes 
+tamaños.
+Esa es la sintaxis que siguen casi todas las clases de Tailwind:
+La primera parte de la clase es el estilo que queremos aplicar, y la 
+segunda el valor.
+
+
+## Instalando Tailwind con Vite
+Por la naturaleza del framework, es obligatorio usar un bundler con
+Tailwind. No existe una versión de un único CSS que podemos descargar
+o asociar en nuestra página.
+
+Para nuestra fortuna, ya estamos usando Vite. Así que vamos a agregar
+Tailwind a nuestro proyecto.
+
+https://tailwindcss.com/docs/guides/vite#vue
+
+1. Instalar los paquetes necesarios, que son el propio de tailwindcss y
+autoprefixer.
+
+    npm i -D tailwindcss autoprefixer
+
+Nota: El -D implica que es una dependencia de desarrollo ("dev 
+dependency").
+
+2. Crear los archivos de configuración de Tailwind y PostCSS, usando el 
+siguiente comando:
+
+    npx tailwindcss init -p
+
+Nota: npx es el comando para ejecutar paquetes de npm directamente desde
+la línea de comandos.
+
+3. Configurar las rutas de nuestros templates para Tailwind en el
+[tailwind.config.js]. Esto es necesario para que Tailwind sepa qué
+archivos tiene que analizar.
+El archivo debe quedar algo así:
+
+    /** @type {import('tailwindcss').Config} */
+    export default {
+    content: [
+        "./index.html",
+        "./src/**/*.{vue,js,ts,jsx,tsx}",
+    ],
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+    }
+
+4. Crear un archivo de css, si no lo tenemos todavía, que incluya las 
+directiva de Tailwind, y se llame en el JS de arranque del proyecto
+(en nuestro caso, [main.js]).
+El contenido del archivo CSS debe tener:
+
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+
+5. Agregar el plugin de Tailwind a Vite en el [vite.config.js]:
+
+    import vue from '@vitejs/plugin-vue';
+    import tailwindcss from 'tailwindcss';
+
+    export default {
+        plugins: [vue(), tailwindcss()],
+    }
+
+6. ???
+
+7. Profit.
