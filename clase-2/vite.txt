@@ -1,0 +1,56 @@
+# Vite
+https://vitejs.dev/
+
+¿Qué es Vite?
+Es un "bundler" o herramienta de "buildeo (build tool) de última generación 
+para frontend. Si conocen webpack, Vite es una como una versión muy mejorada 
+de esa herramienta.
+
+¿Qué es un bundler?
+Un "bundler" (o "empaquetador") es un programa que se encarga de realizar
+múltiples tareas por nosotros, incluyendo las que les da el nombre: empaquetar
+múltiples archivos en uno o unos pocos.
+
+Pero no está limitado a eso. Puede hacer muchas otras cosas, como:
+- Permitirnos utilizar ECMAScript de última generación, incluso aunque los
+browsers no lo soporten (a través de, por ejemplo, Babel).
+- Permitirnos utilizar herramientas que directamente los browsers no soportan,
+como TypeScript.
+- Permitirnos optimizar otros recursos, como CSS o imágenes.
+- Permitirnos usar un "servidor de desarrollo" local que no solo nos evita 
+necesitar levantar el Apache, si no que se encarga de puentear todas estas 
+funcionalidades para que nos sean transparentes.
+- Generar una versión 100% compatible y optimizada para browsers de nuestro 
+sitio.
+- Utilizar todo el ecosistema de npm en frontend.
+- Entre muchas otras cosas.
+
+
+¿Por qué usar Vite por sobre webpack?
+Principalmente, porque es mucho más moderno, mucho más rápido, MUCHO MÁS 
+RÁPIDO, y muchísimo más simple de utilizar.
+Vite utiliza muchas tecnologías modernas, como ESM (ECMAScript Modules) y
+TypeScript para ofrecer una performance y robustez mayor a la de webpack.
+
+
+¿Cómo se utiliza Vite?
+Tenemos que instalarlo a través de npm, y podemos con esa herramienta crear
+un proyecto para Vite usando el siguiente comando:
+
+    npm create vite@latest
+
+Deben correr ese comando en la carpeta donde quieren crear la carpeta del 
+proyecto.
+
+De ahí, seguimos las indicaciones que nos va mostrando la herramienta en 
+consola.
+
+
+Estructura de archivos de Vite
+No hay una gran estructura de archivos que respetar con Vite, y de hecho, la 
+que hay es configurable.
+
+Por defecto, lo único importante es el [package.json] (por supuesto), y el
+archivo [index.html] que está en la raíz.
+Ese index es el "punto de entrada" de Vite a nuestro sistema.
+

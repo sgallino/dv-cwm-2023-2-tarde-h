@@ -1,0 +1,29 @@
+# Agregando Vue a Vite
+Agregar Vue a un proyecto ya existente de Vite es algo muy simple, que
+requiere solo de un par de pasos.
+
+El primero, es instalar tanto Vue como el plugin de Vite para Vue.
+Esto lo resolvemos con un simple comando de npm:
+
+    npm i vue@latest @vitejs/plugin-vue
+
+Documentación del plugin:
+https://github.com/vitejs/vite-plugin-vue/blob/main/packages/plugin-vue/README.md
+
+Una vez instalados ambos paquetes, debemos configurar Vite para que use 
+ese plugin.
+
+
+## Configurando Vite
+Vite se configura a través de un archivo llamado [vite.config.js], el cual si
+no existe, podemos simplemente crearlo en la raíz del proyecto (el mismo
+lugar donde está el [package.json]).
+
+En ese archivo, agregamos el código requerido por el plugin:
+
+// vite.config.js
+import vue from '@vitejs/plugin-vue'
+
+export default {
+  plugins: [vue()],
+}
