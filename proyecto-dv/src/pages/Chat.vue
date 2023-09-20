@@ -1,5 +1,6 @@
 <script>
 import { chatSaveMessage, chatSubscribeToMessages } from './../services/chat.js';
+import { formatDate } from '../helpers/date.js';
 import BaseButton from '../components/BaseButton.vue';
 import BaseLabel from '../components/BaseLabel.vue';
 
@@ -25,6 +26,10 @@ export default {
                 .then(() => {
                     this.newMessage.message = '';
                 });
+        },
+
+        dateToString(date) {
+            return formatDate(date);
         }
     },
 
@@ -48,7 +53,7 @@ export default {
             >
                 <div><b>Usuario:</b> {{ message.user }}</div>
                 <div><b>Mensaje:</b> {{ message.message }}</div>
-                <div class="text-right">{{ message.created_at }}</div>
+                <div class="text-right">{{ dateToString(message.created_at) }}</div>
             </div>
         </div>
 

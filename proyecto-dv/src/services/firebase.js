@@ -1,6 +1,7 @@
 // Este archivo va a contener las instrucciones que inicializan el proyecto de Firebase.
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -18,3 +19,6 @@ export const app = initializeApp(firebaseConfig);
 
 // Inicializamos Firestore.
 export const db = getFirestore(app);
+
+// Inicializamos Auth.
+export const auth = getAuth(app);
