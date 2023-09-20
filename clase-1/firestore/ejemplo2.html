@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro a Firestore</title>
+</head>
+<body>
+    <h1>Intro a Firestore, ahora leyendo en tiempo real</h1>
+
+    <form action="#" id="chat-form">
+        <div>
+            <label for="user">Usuario</label>
+            <input type="text" id="user">
+        </div>
+        <div>
+            <label for="message">Mensaje</label>
+            <textarea id="message"></textarea>
+        </div>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <div id="salida"></div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
+        import { getFirestore, collection, onSnapshot, addDoc } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js"
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB4LK_q9_KbxdZmE8w1GVWGszXrFVj63sQ",
+          authDomain: "dv-cwm-2023-2-t.firebaseapp.com",
+          projectId: "dv-cwm-2023-2-t",
+          storageBucket: "dv-cwm-2023-2-t.appspot.com",
+          messagingSenderId: "458056776259",
+          appId: "1:458056776259:web:fe7e49b60364a11ca1b2f6"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Inicializamos Firestore.
+        const db = getFirestore(app);
+
+        const refChat = collection(db, 'chat');
+
+        /**** Manejando el form ****/
+        const chatForm = document.getElementById('chat-form');
+        const user = document.getElementById('user');
+        const message = document.getElementById('message');
+
+        chatForm.addEventListener('submit', function(ev) {
+            ev.preventDefault();
+
+            const data = {
+                user: user.value,
+                message: message.value
+            }
+
+            /*
+            Para grabar, usamos la función addDoc(), que crea un nuevo
+            documento con un id autogenerado.
+            Recibe como primer argumento la referencia a la collection,
+            y como segundo el objeto que queremos grabar.
+            Retorna una promesa que se resuelve cuando la grabación se
+            completó.
+            */
+            addDoc(refChat, data)
+                .then(() => {
+                    // user.value = "";
+                    message.value = "";
+                });
+        });
+
+        /**** Leyendo de Firestore ****/
+        /*
+        Con getDocs nosotros podíamos leer el contenido completo de una
+        collection, pero solo una vez.
+        ¿Qué pasa si queremos poder obtener updates en tiempo real de los 
+        datos de la collection? Es decir, si queremos que se nos informe 
+        cada vez que algo cambie.
+        Es bastante simple, tenemos que hacer 2 cambios.
+        El primero, es la función. En vez de usar getDocs() vamos a usar
+        otra función que se llama onSnapshot().
+        Lo segundo, es que esta función no retorna una promesa, sino que
+        necesita que le pasemos como segundo parámetro un callback con lo
+        que queremos que haga cada vez que lleguen nuevos datos.
+        */
+        const salida = document.getElementById('salida');
+
+        onSnapshot(refChat, snapshot => {
+            salida.innerHTML = snapshot.docs.map(doc => `<div>
+                <div><b>Usuario:</b> ${doc.data().user}</div>
+                <div><b>Mensaje:</b> ${doc.data().message}</div>
+            </div>`).join('');
+        });
+      </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+# Firestore
+Como mencionamos previamente, es una base de datos NoSQL con grandes 
+capacidades para manejar información en tiempo real.
+
+¿Qué es una base de datos NoSQL (Not only SQL)?
+Es un tipo de base de datos que no sigue el "modelo relacional" tradicional
+que siguen las bases de datos SQL.
+Son lo que generalmente llamamos "bases de datos orientadas a documentos".
+
+Tienen algunas características comunes:
+- Schemaless: No tiene un schema. Es decir, las bases SQL tiene un schema
+que está representado por las tablas, los campos, las relaciones, etc. 
+Siempre es necesario tener primero armado el schema antes de poder guardar
+cualquier dato en ellas. En las NoSQL, en cambio, los datos se pueden 
+guardar en cualquier momento con cualquier formato aceptado por la base.
+- Flexibles: Al no tener un schema, los datos son altamente flexibles.
+- Velocidad: Sumamente rápidas para la lectura y escritura secuencial de 
+la información. Al no haber un schema con el que tener que estar 
+constatemente chequeando que se cumpla, se gana en velocidad.
+- Son mucho más limitadas en la capacidad para relacionar información.
+
+Podemos concluir que no hay un tipo de base de datos que sea mejor en todos
+los casos a la otra.
+Es 100% dependiente de los requerimientos.
+De hecho, no es nada extraño ver proyectos que utilicen 2 o más bases de
+datos diferentes.
+Por ejemplo, un proyecto podría usar diferentes bases de datos para
+diferentes objetivos:
+- MySQL/MariaDB/PostgreSQL: Manejo de los datos más importantes de la 
+aplicación, de los cuales vamos a necesitar análisis y estadísticas
+complejas.
+- Firestore/MongoDB: Manejo de los datos que requieren mayor flexibilidad
+(ej: preferencias de usuario) o mayor velocidad (ej: funcionalidades en
+tiempo real como un chat, sistema de notificaciones o ubicaciones en un 
+mapa con geolocalización).
+- Redis: Manejo de los cachés y datos temporales.
+
+
+## Estructura de los datos en Firestore
+La unidad básica de almacenamiento en Firestore son los "documentos".
+Un documento es algo parecido a un objeto JSON, donde tenemos propiedades
+a las que se les asignan valores.
+Los documentos tienen que existir siempre dentro de una colección.
+
+Por ejemplo, yo podría tener un documento de una entrada de un blog (voy
+a identificar a los documentos con un [D]):
+
+[D] {
+    titulo: 'Intro a Firestore'
+    categoria: 'Desarrollo Web'
+    autor: 'Santiago Gallino'
+    ...
+}
+
+Y ese documento debería existir dentro de una "collection" o colección:
+
+[C] blogs: {
+    [D] idBlog1: {
+        titulo: 'Intro a Firestore'
+        categoria: 'Desarrollo Web'
+        autor: 'Santiago Gallino'
+        ...
+    }
+
+    [D] idBlog2: {
+        titulo: 'Intro a JS'
+        categoria: 'Desarrollo Web'
+        autor: 'Federico Noto'
+        ...
+    }
+
+    ...
+}
+
+Podemos ver que las collections tienen un nombre que las identifica.
+En su interior, cada documento queda identificado por un id único en la 
+colección, el cual puede no ser numérico (y de hecho, por defecto son 
+strings).
+
+Adicionalmente, Firestore permite la creación de datos jerárquicos.
+Por ejemplo, podríamos querer guardar los comentarios de cada entrada del 
+blog, de la siguiente forma:
+
+[C] blogs: {
+    [D] idBlog1: {
+        titulo: 'Intro a Firestore'
+        categoria: 'Desarrollo Web'
+        autor: 'Santiago Gallino'
+        ...
+
+        [C] comentarios: {
+            [D] idComentario1: {
+                usuario: 'Saraza'
+                mensaje: 'Hola mundo!'
+            }
+            
+            [D] idComentario2: {
+                usuario: 'Pepe Trueno'
+                mensaje: '¡Que buen artículo!'
+            }
+            ...
+        }
+    }
+
+    [D] idBlog2: {
+        titulo: 'Intro a JS'
+        categoria: 'Desarrollo Web'
+        autor: 'Federico Noto'
+        ...
+    }
+
+    ...
+}
+
+

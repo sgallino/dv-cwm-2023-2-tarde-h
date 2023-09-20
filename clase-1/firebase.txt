@@ -1,0 +1,26 @@
+# Firebase
+https://firebase.google.com
+
+Firebase es una plataforma "serverless" de Google que ofrece múltiples
+servicios para el desarrollo de todo tipo de aplicaciones web o móviles.
+
+¿Qué es "serverless"?
+Pese a su nombre, serverless no significa que no hay un servidor. Sino
+que nosotros, como desarrolladores, no necesitamos manejar un servidor
+directamente. El servidor, y todo lo que eso implica, queda manejado por
+el servicio mismo.
+
+Entre los muchos servicios que Firebase ofrece, hay 3 que vamos a cubrir en
+cursada:
+- Firestore: Servicio de base de datos NoSQL, con un fuerte enfoque en 
+funcionalidades en tiempo real.
+- Authentication: Servicio de autenticación.
+- Storage: Servicio de almacenamiento de archivos.
+
+
+¿Cómo usamos Firebase en nuestro proyecto?
+Lo primero que vamos a necesitar es una cuenta de Google (puede ser la de 
+Da Vinci).
+
+Una vez iniciado sesión, podemos crear el proyecto desde la consola de 
+Firebase (ver grabación :D).

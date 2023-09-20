@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intro a Firestore</title>
+</head>
+<body>
+    <h1>Intro a Firestore</h1>
+
+    <div id="salida"></div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js"
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB4LK_q9_KbxdZmE8w1GVWGszXrFVj63sQ",
+          authDomain: "dv-cwm-2023-2-t.firebaseapp.com",
+          projectId: "dv-cwm-2023-2-t",
+          storageBucket: "dv-cwm-2023-2-t.appspot.com",
+          messagingSenderId: "458056776259",
+          appId: "1:458056776259:web:fe7e49b60364a11ca1b2f6"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // Inicializamos Firestore.
+        const db = getFirestore(app);
+
+        /**** Leyendo de Firestore ****/
+        /*
+        Para interactuar con cualquier elemento de Firestore, ya sea para
+        lectura o escritura, primero necesitamos obtener la referencia al
+        elemento.
+        Si el elemento es una colección(como "chat" en nuestro caso), 
+        entonces debemos usar la función "collection" que recibe 2 
+        parámetros:
+        1. La referencia de la base de datos.
+        2. El "path" a la collection que nos interesa.
+
+        Luego, si queremos leer el contenido completo de dicha referencia,
+        podemos usar alguna función como getDocs().
+        Esta función recibe como argumento la referencia de la collection
+        o una query (esto lo vemos más adelante), y nos retorna una 
+        promesa que se resuelve con los datos obtenidos.
+        */
+        const salida = document.getElementById('salida');
+
+        const refChat = collection(db, 'chat');
+
+        getDocs(refChat)
+            .then(snapshot => {
+                /*
+                Los datos vienen como un "QuerySnapshot".
+                Un "snapshot" es una fotografía de los datos en la base
+                en el momento de hacer la consulta.
+                Para poder usarlos, nos ofrece dos alternativas:
+                1. La función forEach, que recorre todos los elementos, 
+                    igual que el forEach de arrays de JS.
+                2. La propiedad "docs" que nos retorna un array con los
+                    documentos.
+                */
+                // Versión con el forEach.
+                // salida.innerHTML = "";
+                // snapshot.forEach(doc => {
+                //     // Para pedir los datos al documento, necesitamos 
+                //     // pasar por la función data()
+                //     salida.innerHTML += `<div>
+                //         <div><b>Usuario:</b> ${doc.data().user}</div>
+                //         <div><b>Mensaje:</b> ${doc.data().message}</div>
+                //     </div>`;
+                // });
+
+                // Versión con docs, más estilo funcional.
+                // Para pedir los datos al documento, necesitamos 
+                // pasar por la función data()
+                salida.innerHTML = snapshot.docs.map(doc => `<div>
+                    <div><b>Usuario:</b> ${doc.data().user}</div>
+                    <div><b>Mensaje:</b> ${doc.data().message}</div>
+                </div>`).join('');
+            })
+            .catch(err => {
+                console.error("Error al traer el chat: ", err);
+            });
+      </script>
+</body>
+</html>
